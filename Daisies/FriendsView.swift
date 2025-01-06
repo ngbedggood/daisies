@@ -9,7 +9,14 @@ import SwiftUI
 
 struct FriendsView: View {
     var body: some View {
-        Text("Hello, here are your friends!")
+        VStack {
+            List {
+                Text("Jack")
+                Text("Samantha")
+                Text("Bayley")
+                Text("Shelton")
+            }
+        }
     }
 }
 
