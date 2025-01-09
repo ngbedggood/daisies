@@ -40,6 +40,8 @@ struct MapView: View {
                         locations.append(newLocation)
                     }
                 }
+                .onAppear {
+                }
             }
             Button("Clear") {
                 locations = []

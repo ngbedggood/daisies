@@ -11,10 +11,10 @@ struct FriendsView: View {
     var body: some View {
         VStack {
             List {
-                Text("Jack")
-                Text("Samantha")
-                Text("Bayley")
-                Text("Shelton")
+                Text("Tinky-Winky")
+                Text("Dipsy")
+                Text("Laa Laa")
+                Text("Po")
             }
         }
     }
