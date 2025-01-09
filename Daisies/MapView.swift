@@ -10,11 +10,14 @@ import MapKit
 
 struct MapView: View {
     
+    @Environment(LocationManager.self) private var lm
+    
     @Binding var startPosition: MapCameraPosition
     @Binding var locations: [Location]
     
     var body: some View {
         VStack {
+            Text("Your location is \(lm.location?.coordinate.latitude ?? 0.0) \(lm.location?.coordinate.longitude ?? 0.0)")
             MapReader { proxy in
                 Map(initialPosition: startPosition) {
                     ForEach(locations) { location in
@@ -24,6 +27,7 @@ struct MapView: View {
                 .mapControls {
                     MapUserLocationButton()
                 }
+                .mapStyle(.standard)
                 .onTapGesture { position in
                     if let coordinate = proxy.convert(position, from: .local) {
                         print("Tapped at \(coordinate)")
