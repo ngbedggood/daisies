@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "9D8EEBCD-90F6-48AA-92F2-94040B72CF0D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Daisies.xcodeproj",
+      "identifier" : "43C662ED2D2B43120002B276",
+      "name" : "Daisies"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Daisies.xcodeproj",
+        "identifier" : "43C662FD2D2B43130002B276",
+        "name" : "DaisiesTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Daisies.xcodeproj",
+        "identifier" : "43C663072D2B43130002B276",
+        "name" : "DaisiesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -7,31 +7,26 @@
 
 import SwiftUI
 import MapKit
-import CoreLocation
 
 
 struct ContentView: View {
     
+    @State var locationManager = LocationManager()
+    
     @State private var startPosition = MapCameraPosition.region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 43.7, longitude: -93),
+            center: CLLocationCoordinate2D(latitude: 43, longitude: -93),
             span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         )
     )
     
     @State private var locations : [Location] = []
     
-    /*let locationManager = CLLocationManager()
-    
-    locationManager.delegate = self
-    
-    locationManager.requestWhenInUseAuthorization()
-    
-    locationManager.startUpdatingLocation()*/
     
     var body: some View {
         TabView {
             MapView(startPosition: $startPosition, locations: $locations)
+                .environment(locationManager)
                 .tabItem {
                     Label("Map", systemImage: "globe")
                 }
