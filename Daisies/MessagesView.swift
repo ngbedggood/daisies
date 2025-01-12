@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct MessagesView: View {
+    
+    @Binding var locations: [Location]
+    
     var body: some View {
-        Text("Here are your past messages")
+        List {
+            ForEach(locations) { location in
+                VStack{
+                    Text("\(location.message) - \(location.name)")
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    MessagesView()
+    let testLocations = [
+        Location(id: UUID(), name: "test", message: "Hi there", latitude: 43.0, longitude: -92.5),
+    ]
+    MessagesView(locations: .constant(testLocations))
 }
