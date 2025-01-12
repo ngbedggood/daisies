@@ -35,7 +35,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Friends", systemImage: "person.3.fill")
                 }
-            MessagesView()
+            MessagesView(locations: $locations)
                 .tabItem {
                     Label("Messages", systemImage: "camera.macro")
                 }

@@ -15,14 +15,36 @@ struct MapView: View {
     @Binding var startPosition: MapCameraPosition
     @Binding var locations: [Location]
     
+    @State private var newLocation: Location = Location(
+        id: UUID(),
+        name: "test name",
+        message: "test name",
+        latitude: 21.0,
+        longitude: 69.0
+    )
+    
+    @State private var isShowingSheet = false
+    
     var body: some View {
         VStack {
             Text("Your location is \(lm.location?.coordinate.latitude ?? 0.0) \(lm.location?.coordinate.longitude ?? 0.0)")
             MapReader { proxy in
                 Map(initialPosition: startPosition) {
                     ForEach(locations) { location in
-                        Marker(location.name, coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
+                        Annotation(location.name, coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
+                                Image("marker")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .animation(.easeInOut(duration: 1.5), value: startPosition)
+                        }
                     }
+                }
+                .sheet(isPresented: $isShowingSheet) {
+                    NavigationStack {
+                        NewDaisyView(newLocation: $newLocation, locations: $locations)
+                    }
+                    .presentationDetents([.medium])
+                    .interactiveDismissDisabled()
                 }
                 .mapControls {
                     MapUserLocationButton()
@@ -30,17 +52,16 @@ struct MapView: View {
                 .mapStyle(.standard)
                 .onTapGesture { position in
                     if let coordinate = proxy.convert(position, from: .local) {
-                        print("Tapped at \(coordinate)")
-                        let newLocation = Location(
+                        //print("Tapped at \(coordinate)")
+                        newLocation = Location(
                             id: UUID(),
-                            name: "New Location",
+                            name: "friend_name",
+                            message: "",
                             latitude: coordinate.latitude,
                             longitude: coordinate.longitude
                         )
-                        locations.append(newLocation)
+                        isShowingSheet = true
                     }
-                }
-                .onAppear {
                 }
             }
             Button("Clear") {
@@ -60,7 +81,7 @@ struct MapView: View {
         ))
 
     let testLocations = [
-        Location(id: UUID(), name: "test", latitude: 43.0, longitude: -92.5),
+        Location(id: UUID(), name: "test", message: "Hi there", latitude: 43.0, longitude: -92.5),
     ]
     MapView(startPosition: .constant(testPosition), locations: .constant(testLocations))
 }
