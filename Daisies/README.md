@@ -1,3 +1,0 @@
-# Daisies App
-
-WIP

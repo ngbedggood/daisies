@@ -26,6 +26,10 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
+            LoginView()
+                .tabItem {
+                    Label("Log In", systemImage: "person.fill")
+                }
             MapView(startPosition: $startPosition, locations: $locations)
                 .environment(locationManager)
                 .tabItem {
