@@ -36,7 +36,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         guard let newLocation = locations.last else { return } // Use last location as location
         location = newLocation
         
-        // Uncomment this if you onely want the location once, not repeatedly
+        // Uncomment this if you only want the location once, not repeatedly
         //manager.stopUpdatingLocation()
     }
     
@@ -49,7 +49,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             print("Location Manger authorization granted.")
             manager.startUpdatingLocation()
         case .denied, .restricted:
-            print("Locaation Manager authorization denied.")
+            print("Location Manager authorization denied.")
             errorMessage = ("Location Manager access denied :(")
             manager.stopUpdatingLocation()
         case .notDetermined:
