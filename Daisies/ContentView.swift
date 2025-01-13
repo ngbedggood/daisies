@@ -12,17 +12,8 @@ import MapKit
 struct ContentView: View {
     
     @State var locationManager = LocationManager()
-    
     @State private var startPosition: MapCameraPosition = .userLocation(fallback: .automatic)
-    /*@State private var startPosition = MapCameraPosition.region(
-        MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 43, longitude: -93),
-            span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        )
-    )*/
-    
     @State private var locations : [Location] = []
-    
     
     var body: some View {
         TabView {
@@ -44,7 +35,6 @@ struct ContentView: View {
                     Label("Messages", systemImage: "camera.macro")
                 }
         }
-        //.padding()
     }
 }
 
