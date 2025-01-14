@@ -19,27 +19,7 @@ struct LoginView: View {
             await isSignUp ? try am.signUp() : try am.logIn()
         }
     }
-    /*
-    func signUp() {
-        Task {
-            do {
-                try await am.signUp()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
     
-    func logIn() {
-        Task {
-            do {
-                try await am.logIn()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    */
     var body: some View {
         //This can be done too
         //@Bindable var am = am
@@ -64,6 +44,7 @@ struct LoginView: View {
             HStack {
                 if (showPassword) {
                     TextField("Password", text: Bindable(am).password)
+                        .autocapitalization(.none)
                         .autocorrectionDisabled()
                         .frame(height: 22)
                         .padding(10)
@@ -91,6 +72,10 @@ struct LoginView: View {
                 //.border(.black)
                 
             }
+            
+            Text(am.error)
+                .font(.caption)
+            
             Spacer()
             VStack {
                 Button(action: {
@@ -99,6 +84,7 @@ struct LoginView: View {
                     Text("\(isSignUp ? "Sign Up" : "Log In")")
                 })
                 .buttonStyle(.borderedProminent)
+                .fontWeight(.bold)
                 
                 Button(action: {
                     isSignUp.toggle()
