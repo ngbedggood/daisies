@@ -26,7 +26,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         manager.startUpdatingLocation()
     }
     
-    
     // Delegate methods - Apple has created and will call but I need to fill out
     func requestLocation() {
         manager.requestLocation()

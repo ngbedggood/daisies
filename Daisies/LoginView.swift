@@ -6,37 +6,44 @@
 //
 
 import SwiftUI
-import Firebase
-import FirebaseAuth
 
 struct LoginView: View {
     
-    @State private var userEmail: String = ""
-    @State private var userPassword: String = ""
+    @Environment(AuthManager.self) private var am
+    
     @State private var showPassword: Bool = false
+    @State private var isSignUp: Bool = true
     
-    
-    func signUpUser() {
-        Auth.auth().createUser(withEmail: userEmail, password: userPassword) { authResult, error in
-            if let error = error {
-                print("Sign up error: \(error.localizedDescription)")
-                return
+    func authenticate() {
+        Task {
+            await isSignUp ? try am.signUp() : try am.logIn()
+        }
+    }
+    /*
+    func signUp() {
+        Task {
+            do {
+                try await am.signUp()
+            } catch {
+                print(error.localizedDescription)
             }
-            print("Signed up successfully?")
         }
     }
     
-    func loginUser() {
-        Auth.auth().signIn(withEmail: userEmail, password: userPassword) { authResult, error in
-            if let error = error {
-                print("Log in error: \(error.localizedDescription)")
-                return
+    func logIn() {
+        Task {
+            do {
+                try await am.logIn()
+            } catch {
+                print(error.localizedDescription)
             }
-                print("\(authResult?.user) has logged in!")
         }
     }
-    
+    */
     var body: some View {
+        //This can be done too
+        //@Bindable var am = am
+        
         VStack {
             Spacer()
             Text("Daisies")
@@ -45,7 +52,7 @@ struct LoginView: View {
                 .fontWeight(.bold)
                 .foregroundStyle(.brown)
 
-            TextField("Email", text: $userEmail)
+            TextField("Email", text: Bindable(am).email)
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
                 .frame(height: 22)
@@ -56,7 +63,7 @@ struct LoginView: View {
                 )
             HStack {
                 if (showPassword) {
-                    TextField("Password", text: $userPassword)
+                    TextField("Password", text: Bindable(am).password)
                         .autocorrectionDisabled()
                         .frame(height: 22)
                         .padding(10)
@@ -65,7 +72,7 @@ struct LoginView: View {
                                 .stroke(.inputBorder, lineWidth: 2)
                         )
                 } else {
-                    SecureField("Password", text: $userPassword)
+                    SecureField("Password", text: Bindable(am).password)
                         .autocorrectionDisabled()
                         .frame(height: 22)
                         .padding(10)
@@ -85,21 +92,20 @@ struct LoginView: View {
                 
             }
             Spacer()
-            HStack {
+            VStack {
                 Button(action: {
-                    signUpUser()
+                    authenticate()
                 }, label: {
-                    Text("Sign Up")
+                    Text("\(isSignUp ? "Sign Up" : "Log In")")
                 })
                 .buttonStyle(.borderedProminent)
-                .tint(.brown)
                 
                 Button(action: {
-                    loginUser()
+                    isSignUp.toggle()
                 }, label: {
-                    Text("Login")
+                    Text("\(isSignUp ? "I already have an account" : "I don't have an account")")
                 })
-                .buttonStyle(.borderedProminent)
+                .padding(.top, 20)
             }
         }
         .padding()
