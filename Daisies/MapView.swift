@@ -43,7 +43,7 @@ struct MapView: View {
                     NavigationStack {
                         NewDaisyView(newLocation: $newLocation, locations: $locations)
                     }
-                    .presentationDetents([.medium])
+                    .presentationDetents([.fraction(0.6)])
                     .interactiveDismissDisabled()
                 }
                 .mapControls {
@@ -67,8 +67,10 @@ struct MapView: View {
             Button("Clear") {
                 locations = []
             }
+            .buttonStyle(DDD())
+            .frame(width: 100, height: 40)
+            .fontWeight(.bold)
             .padding()
-            .buttonStyle(.borderedProminent)
         }
     }
 }

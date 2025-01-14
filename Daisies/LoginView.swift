@@ -83,8 +83,9 @@ struct LoginView: View {
                 }, label: {
                     Text("\(isSignUp ? "Sign Up" : "Log In")")
                 })
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(DDD())
                 .fontWeight(.bold)
+                .frame(width: 100, height: 40)
                 
                 Button(action: {
                     isSignUp.toggle()

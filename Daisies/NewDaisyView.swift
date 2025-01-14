@@ -13,32 +13,43 @@ struct NewDaisyView: View {
     @Binding var newLocation: Location
     @Binding var locations: [Location]
     
+    // temp proto
+    var testFriends = ["Tinky-Winky", "Dipsy", "Laa Laa", "Po"]
+    @State private var selectedFriend: String = "Tinky-Winky"
+    
     var body: some View {
-            Form {
-                TextField("Write a message here...", text: $newLocation.message, axis: .vertical)
-                    .lineLimit(10, reservesSpace: true)
-                    .textFieldStyle(.plain)
-                    .submitLabel(.return)
-                Button("Plant Daisy") {
-                    //$locations.append(newLocation)
-                    locations.append(newLocation)
+        HStack {
+            Text("Plant a daisy for ")
+                .font(.title)
+            // Will need to customise this
+            Picker("Friends", selection: $selectedFriend) {
+                ForEach(testFriends, id: \.self) { friend in
+                    Text(friend)
+                }
+            }
+        }
+        Form {
+            TextField("Write a message here...", text: $newLocation.message, axis: .vertical)
+                .lineLimit(8, reservesSpace: true)
+                .textFieldStyle(.plain)
+                .submitLabel(.return)
+        }
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
                     dismiss()
                 }
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity)
-                .controlSize(.large)
-                .font(.title2)
-                .fontWeight(.bold)
             }
-            .navigationTitle("Plant a daisy for your \(newLocation.name)")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-            }
+        }
+        Button("Plant Daisy") {
+            //$locations.append(newLocation)
+            locations.append(newLocation)
+            dismiss()
+        }
+        .buttonStyle(DDD())
+        .frame(width: 160, height: 60)
+        .font(.title2)
+        .fontWeight(.bold)
     }
 }
 
